@@ -32,16 +32,16 @@ jobs:
     needs: docker-build
     env:
       MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
-      MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
+      MONGO_USERNAME: "ahmed"
       MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Install kubectl CLI
-        uses: azure/setup-kubectl@v3
+        uses: azure/setup-kubectl@v4
         with:
-          version: '1.26.0'
+          version: 'v1.26.0'
 
       - name: Set Kubeconfig Context
         uses: azure/k8s-set-context@v3
@@ -56,7 +56,7 @@ jobs:
           kubectl get nodes
 
       - name: Replace tokens in manifests
-        uses: cschlieden/replace-tokens@v1
+        uses: cschleiden/replace-tokens@v1
         with:
           tokenPrefix: '_{_'
           tokenSuffix: '_}_'
